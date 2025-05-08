@@ -1,31 +1,102 @@
-# Deep-Learning-Challenge
+# AlphabetSoupCharity Neural Network Report
 
-# Overview of Analysis
+## Overview
 
-The goal of this machine learning analysis is to predict whether applicants will be successful if funded by AlphabetSoup, a charity organization. This classification model helps optimize which organizations to support based on historical application data, improving funding allocation efficiency and maximizing social impact.
+The objective of this project was to develop a binary classification neural network to predict whether organizations funded by Alphabet Soup would be successful (1) or unsuccessful (0). Using historical records from charity_data.csv, I:
 
-# 1. Data Processing
+- Preprocessed the dataset for modeling
 
-  - Target Variable: IS_SUCCESSFUL (This column indicates whether the funded organization was successful (1) or not (0))
-  - Features Used (after encoding and cleaning):
-    - APPLICATION_TYPE
-    - AFFILIATION
-    - CLASSIFICATION
-    - USE_CASE
-    - ORGANIZATION
-    - STATUS
-    - INCOME_AMT
-    - SPECIAL_CONSIDERATION
-    - ASK_AMT
-   
-  - Columns Removed: EIN and NAME
+- Built an initial deep learning model using TensorFlow/Keras
 
-# 2. Compiling, Training, and Evaluating the Model
+- Conducted iterative optimization trials to improve accuracy
 
-I developed a neural network model using TensorFlow and Keras, implementing two hidden dense layers with 80 and 30 neurons, respectively. The model was trained over 100 epochs and evaluated using test data to assess loss and accuracy. Upon completion, the finalized model was exported as an HDF5 file for future deployment or further tuning.
+The final submission includes:
 
-I cleaned and preprocessed the data by consolidating low-frequency categorical values into an "Other" category (e.g., APPLICATION_TYPE, CLASSIFICATION) and applied one-hot encoding. For model tuning, I experimented with different architectures by adjusting the number of layers and neurons, testing various activation functions like ReLU and tanh, and incorporating additional or dropout layers as needed. The model was compiled using binary cross-entropy as the loss function and optimized with the Adam optimizer. Throughout training, I monitored performance by reviewing accuracy and loss trends over epochs and validated the model to guard against overfitting.
+- A base model in the starter code
 
-# 3. Results
+- An optimized model in AlphabetSoupCharity_Optimization.ipynb
 
-The model achieved an accuracy of approximately 73% with a loss exceeding 0.5, falling short of the 75% target benchmark. Despite experimenting with additional layers, adjusting the number of neurons per layer, and tuning the number of training epochs, the model's performance remained below the desired threshold.
+- This written technical summary
+
+## Data Preprocessing
+
+- Target Variable: IS_SUCCESSFUL (1 for success, 0 for failure)
+
+- Dropped Columns:
+
+  - EIN and NAME (identifiers)
+
+  - SPECIAL_CONSIDERATIONS_Y, USE_CASE_Other, and INCOME_AMT_0 (minimal predictive value)
+
+- Techniques Used:
+
+  - One-hot encoding via pd.get_dummies() for categorical features
+
+  - Data split with train_test_split
+
+- Feature normalization using StandardScaler
+
+## Initial Model Development
+
+- Architecture:
+
+  - 3 layers: [80 → 30 → 1 neurons]
+
+- Activations: ReLU (hidden), Sigmoid (output)
+
+- Loss Function: Binary Crossentropy
+
+- Regularization: EarlyStopping to prevent overfitting
+
+- Performance:
+
+  - Accuracy: ~57% on test data
+
+  - Served as a baseline for future improvements
+
+## Model Optimization Attempts
+
+- Attempt 1: Increased Model Complexity
+
+  - Changes:
+
+    - Expanded to 4 layers: [256 → 128 → 64 → 1]
+  
+    - Mixed activation functions (ReLU + Tanh)
+  
+    - Increased number of training epochs
+  
+  - Result: ~44% accuracy; performance declined due to potential overfitting or poor function choices
+
+- Attempt 2: Simplified Input Data
+
+  - Changes:
+
+    - Removed additional low-signal columns
+
+    - Maintained simpler architecture
+
+  - Result: Slight improvement, but still below baseline
+
+- Attempt 3: Dropout Regularization
+
+  - Changes:
+
+    - Reintroduced complex architecture
+
+    - Added 20% dropout after each hidden layer
+
+    - Mixed activations: ReLU + Tanh
+
+  - Result: Accuracy improved to ~52.9%, better than Attempt 1, but still not surpassing the original
+
+## Conclusion
+
+Despite multiple optimization attempts, the initial model remained the best, with an accuracy of approximately 57%. However, the experimentation process was valuable and offered the following insights:
+
+ - Model complexity does not guarantee better results
+
+  - Thoughtful feature selection and regularization are critical
+
+  - Activation functions significantly influence outcomes
+
