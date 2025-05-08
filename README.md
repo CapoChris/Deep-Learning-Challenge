@@ -1,4 +1,5 @@
 # AlphabetSoupCharity Neural Network Report
+- To Run: Open the notebooks in Google Colab or Jupyter, run all cells in order. Models are saved automatically.
 
 ## Overview
 
